@@ -20,11 +20,9 @@ module "secrets_manager" {
   count  = var.enable_secrets_man ? 1 : 0
 }
 
-#module "eks" {
-#  source = "./modules/eks"
-#  #count = var.enable_eks ? 1 : 0
-#
-#  vpc_id     = module.network[0].vpc_id
-#  secret_arn = module.secrets_manager[0].secret_arn
-#  #depends_on = [module.secrets_manager[0]]
-#}
+module "eks" {
+  source = "./modules/eks"
+
+  vpc_id     = module.network[0].vpc_id
+  secret_arn = module.secrets_manager[0].secret_arn
+}

@@ -1,6 +1,6 @@
 variable "enable_net" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "enable_s3" {
@@ -8,18 +8,21 @@ variable "enable_s3" {
   default = false
 }
 
+variable "enable_ecr" {
+  type = bool
+  default = true
+}
+
 variable "enable_secrets_man" {
   type    = bool
-  default = false
+  default = true
 }
 
-variable "enable_eks" {
-  type    = bool
-  default = false
-}
-
-variable "enable_ecr" {}
+variable "ecr_repo_name" {}
 
 #variable "app_unit" {}
 
-variable "ecr_repo_name" {}
+#variable "enable_eks" {
+#  type    = bool
+#  default = true
+#}
