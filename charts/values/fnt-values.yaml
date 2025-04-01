@@ -1,0 +1,16 @@
+deploy:
+  name: fnt-deploy
+  label:
+    key: app
+    value: fnt-deploy
+  container:
+    name: fnt-cnt
+    image: terezabisharyan/fnt:v1
+    cnt_port: 80
+
+service:
+  name: fnt-svc
+  port: 8088
+  targetPort: 80
+
+    

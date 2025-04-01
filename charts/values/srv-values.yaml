@@ -1,0 +1,16 @@
+deploy:
+  name: srv-deploy
+  label:
+    key: app
+    value: srv-deploy
+  container:
+    name: srv-cnt
+    image: terezabisharyan/srv:v1
+    cnt_port: 4000
+
+service:
+  name: srv-svc
+  port: 8084
+  targetPort: 4000
+
+    

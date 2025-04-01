@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  namespace: somens
+spec:
+  #type: NodePort
+  ports:
+  - port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.targetPort }}
+    #nodePort: 30014
+  selector:
+    {{ .Values.deploy.label.key }}: {{ .Values.deploy.label.value }}
+
+
+
+      #---
+      #apiVersion: v1
+      #kind: Service
+      #metadata:
+      #  name: srv-svc
+      #  namespace: somens
+      #spec:
+      #  #type: NodePort
+      #  ports:
+      #  - port: 8084
+      #    targetPort: 4000
+      #    #nodePort: 30014
+      #  selector:
+      #    app: srv-deploy      

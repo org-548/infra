@@ -1,0 +1,31 @@
+#version: 0.23.1
+version: 0.19.5
+
+.options: &options
+  namespace: somens
+  wait: true
+  timeout: 300s
+  create_namespace: true
+
+releases:
+  - name: backend
+    chart:
+      name: ./app
+    tags: [backend]
+    values:
+      - values/srv-values.yaml
+    #namespace: somens
+    <<: *options
+        
+  - name: frontend
+    chart:
+      name: ./app 
+    tags: [frontend]
+    values:
+      - values/fnt-values.yaml
+    #namespace: somens
+    depends_on:
+      - backend
+    <<: *options      
+
+

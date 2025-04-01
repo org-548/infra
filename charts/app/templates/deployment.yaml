@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deploy.name }}
+  namespace: somens
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{ .Values.deploy.label.key }}: {{ .Values.deploy.label.value }}
+  template:
+    metadata:
+      labels:
+        {{ .Values.deploy.label.key }}: {{ .Values.deploy.label.value }}
+    spec:
+      serviceAccountName: m-service-account
+      containers:
+        - name: {{ .Values.deploy.container.name }}
+          image: {{ .Values.deploy.container.image }}
+          ports:
+            - containerPort: {{ .Values.deploy.container.cnt_port }}
+          env:
+            - name: SM_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: m-eks-secret
+                  key: address    
+
+
