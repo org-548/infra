@@ -1,20 +1,20 @@
 variable "enable_net" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "enable_secrets_man" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "enable_eks" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "enable_ecr" {}
 
-variable "app_unit" {}
+#variable "app_unit" {}
 
 variable "ecr_repo_name" {}

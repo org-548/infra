@@ -4,10 +4,10 @@ module "network" {
 }
 
 module "ecr" {
-  source = "./modules/ecr"
-  count = var.enable_ecr ? 1 : 0
-  app_unit = var.app_unit
-  ecr_repo_name = var.ecr_repo_name   #From .tfvars file
+  source        = "./modules/ecr"
+  count         = var.enable_ecr ? 1 : 0
+  #app_unit      = var.app_unit
+  ecr_repo_name = var.ecr_repo_name #From .tfvars file
 }
 
 module "secrets_manager" {

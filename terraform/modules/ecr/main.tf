@@ -17,12 +17,12 @@ resource "aws_ecr_lifecycle_policy" "example" {
   policy     = data.template_file.policy.rendered
 }
 
-resource "terraform_data" "dkr_pack" {
-  count = var.tf_data_dkr_pack ? 1 : 0
-  provisioner "local-exec" {
-    command = "bash ${path.module}/file.sh ${var.app_unit} ${var.account_id} ${var.region} ${var.ecr_repo_name} ${var.tag}"
-  }
-  triggers_replace = {
-    "run_at" = timestamp()
-  }
-}
+#resource "terraform_data" "dkr_pack" {
+#  count = var.tf_data_dkr_pack ? 1 : 0
+#  provisioner "local-exec" {
+#    command = "bash ${path.module}/file.sh ${var.app_unit} ${var.account_id} ${var.region} ${var.ecr_repo_name} ${var.tag}"
+#  }
+#  triggers_replace = {
+#    "run_at" = timestamp()
+#  }
+#}
