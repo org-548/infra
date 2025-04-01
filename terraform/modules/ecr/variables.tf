@@ -19,7 +19,7 @@ variable "tf_data_dkr_pack" {
 }
 
 #Missing
-variable "app_unit" {}
+#variable "app_unit" {}
 
 variable "account_id" {
   default = "637423489195"
