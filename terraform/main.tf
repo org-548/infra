@@ -3,9 +3,14 @@ module "network" {
   count  = var.enable_net ? 1 : 0
 }
 
+module "s3" {
+  source = "./modules/s3"
+  count  = var.enable_s3 ? 1 : 0
+}
+
 module "ecr" {
-  source        = "./modules/ecr"
-  count         = var.enable_ecr ? 1 : 0
+  source = "./modules/ecr"
+  count  = var.enable_ecr ? 1 : 0
   #app_unit      = var.app_unit
   ecr_repo_name = var.ecr_repo_name #From .tfvars file
 }

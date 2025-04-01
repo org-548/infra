@@ -3,6 +3,11 @@ variable "enable_net" {
   default = false
 }
 
+variable "enable_s3" {
+  type    = bool
+  default = false
+}
+
 variable "enable_secrets_man" {
   type    = bool
   default = false
