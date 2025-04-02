@@ -13,6 +13,27 @@ variable "eks_version" {
   default = "1.31"
 }
 
+variable "admin_permission" {
+  type = bool
+  default = true
+}
+
+variable "user_arn" {
+  default = "arn:aws:iam::637423489195:user/terraform-user"
+}
+
+variable "type" {
+  default = "STANDARD"
+}
+
+variable "access_entry_policy" {
+  default = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+}
+
+variable "access_scope" {
+  default = "cluster"
+}
+
 variable "node_group_role_name" {
   default = "node-group-role"
 }
