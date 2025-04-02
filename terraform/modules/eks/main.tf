@@ -33,7 +33,7 @@ data "aws_subnets" "pub" {
 
 resource "aws_eks_cluster" "this" {
   name     = var.cluster_name
-  version  = var.eks_version
+  #version  = var.eks_version
   role_arn = aws_iam_role.for_eks.arn
 
   access_config {
