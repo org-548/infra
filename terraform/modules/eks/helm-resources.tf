@@ -4,6 +4,7 @@ data "aws_eks_cluster" "this" {
 
 data "aws_eks_cluster_auth" "this" {
   name = aws_eks_cluster.this.name
+  depends_on = [aws_eks_cluster.this]
 }
 
 #provider "helm" {
@@ -14,15 +15,25 @@ data "aws_eks_cluster_auth" "this" {
   #}
 #}
 
+#provider "helm" {
+  #kubernetes {
+    #host                   = data.aws_eks_cluster.this.endpoint
+    #cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+    #exec {
+      #api_version = "client.authentication.k8s.io/v1beta1"
+      #args        = ["eks", "get-token", "--cluster-name", var.cluster_name, "--output", "json"]
+      #command     = "aws"
+    #}
+  #}
+#}
+
+
 provider "helm" {
   kubernetes {
-    host                   = data.aws_eks_cluster.this.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
-    exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", var.cluster_name, "--output", "json"]
-      command     = "aws"
-    }
+    host                   = aws_eks_cluster.this.endpoint
+    cluster_ca_certificate = base64decode(aws_eks_cluster.this.certificate_authority.0.data)
+    token                  = data.aws_eks_cluster_auth.this.token
+    load_config_file       = false
   }
 }
 
