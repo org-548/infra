@@ -38,7 +38,7 @@ resource "aws_eks_cluster" "this" {
 
   access_config {
     authentication_mode = "API"
-    bootstrap_cluster_creator_admin_permissions = true
+    bootstrap_cluster_creator_admin_permissions = var.admin_permission
   }
 
   vpc_config {
@@ -46,6 +46,22 @@ resource "aws_eks_cluster" "this" {
   }
 
   depends_on = [aws_iam_role_policy_attachment.this]
+}
+
+resource "aws_eks_access_entry" "for_local_access" {
+  cluster_name      = aws_eks_cluster.this.name
+  principal_arn     = var.user_arn
+  type              = var.type
+}
+
+resource "aws_eks_access_policy_association" "for_local_access" {
+  cluster_name  = aws_eks_cluster.this.name
+  policy_arn    = var.access_entry_policy
+  principal_arn = var.user_arn
+
+  access_scope {
+    type       = var.access_scope
+  }
 }
 
 #Node-group configuration
