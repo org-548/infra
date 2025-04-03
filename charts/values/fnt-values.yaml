@@ -5,8 +5,10 @@ deploy:
     value: fnt-deploy
   container:
     name: fnt-cnt
-    image: terezabisharyan/fnt:v1
     cnt_port: 80
+  image: 
+    name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/fnt
+    tag: latest
 
 service:
   name: fnt-svc
