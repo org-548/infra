@@ -5,8 +5,10 @@ deploy:
     value: srv-deploy
   container:
     name: srv-cnt
-    image: terezabisharyan/srv:v1
     cnt_port: 4000
+  image: 
+    name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/srv
+    tag: latest
 
 service:
   name: srv-svc
