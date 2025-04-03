@@ -8,7 +8,7 @@ deploy:
     cnt_port: 80
   image: 
     name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/fnt
-    tag: latest
+    tag: b953ab75
 
 service:
   name: fnt-svc
