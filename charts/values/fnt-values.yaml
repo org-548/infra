@@ -7,7 +7,7 @@ deploy:
     name: fnt-cnt
     cnt_port: 80
   image: 
-    name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/fnt
+    name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/client-repo
     tag: b953ab75
 
 service:
