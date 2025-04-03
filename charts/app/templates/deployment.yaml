@@ -17,7 +17,7 @@ spec:
       serviceAccountName: m-service-account
       containers:
         - name: {{ .Values.deploy.container.name }}
-          image: {{ .Values.deploy.container.image }}
+          image: "{{ .Values.deploy.image.name }}:{{ .Values.deploy.image.tag }}"
           ports:
             - containerPort: {{ .Values.deploy.container.cnt_port }}
           env:
