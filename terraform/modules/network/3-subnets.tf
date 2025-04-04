@@ -25,7 +25,7 @@ resource "aws_subnet" "priv" {
   tags = {
     Name                              = "${var.priv_sub_tag}-${count.index + 1}"
     "kubernetes.io/role/internal-elb" = "1"
-    "kubernetis.io/cluster/demo"      = "owned"
+    "kubernetis.io/cluster/first-eks"      = "owned"
   }
 }
 
