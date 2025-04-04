@@ -1,0 +1,17 @@
+deploy:
+  name: fnt-deploy
+  label:
+    key: app
+    value: fnt-deploy
+  container:
+    name: fnt-cnt
+    cnt_port: 80
+  image: 
+    name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/client-repo
+    tag: latest
+ 
+
+service:
+  name: fnt-svc
+  port: 8088
+  targetPort: 80
