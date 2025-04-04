@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_ecr_repository" "different" {
   count                = var.ecr_cnt
-  name                 = var.ecr_repo_name
+  name                 = var.ecr_repo_name[count.index]
   force_delete         = var.force_delete
   image_tag_mutability = var.mutability
 }

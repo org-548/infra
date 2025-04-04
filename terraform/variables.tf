@@ -18,7 +18,6 @@ variable "enable_secrets_man" {
   default = true
 }
 
-variable "ecr_repo_name" {}
 
 #variable "app_unit" {}
 

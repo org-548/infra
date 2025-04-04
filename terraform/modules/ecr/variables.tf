@@ -1,6 +1,6 @@
 variable "ecr_cnt" {
   type        = number
-  default     = 1
+  default     = 2
   description = "Count of ECR repository"
 }
 
@@ -30,7 +30,10 @@ variable "region" {
 }
 
 #Missing
-variable "ecr_repo_name" {}
+variable "ecr_repo_name" {
+  type    = list(string)
+  default = ["server-repo", "client-repo"]
+}
 
 variable "tag" {
   default = "latest"
