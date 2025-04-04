@@ -11,7 +11,7 @@ resource "aws_subnet" "pub" {
   tags = {
     Name                         = "${var.pub_sub_tag}-${count.index + 1}"
     "kubernetes.io/role/elb"     = "1"
-    "kubernetes.io/cluster/first-eks" = "owned"
+    "kubernetes.io/cluster/demo" = "owned"
   }
 }
 
