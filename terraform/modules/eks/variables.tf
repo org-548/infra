@@ -14,7 +14,7 @@ variable "eks_version" {
 }
 
 variable "admin_permission" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -115,7 +115,7 @@ variable "helm_repo" {
 }
 
 variable "chart" {
-  default  ="external-secrets"
+  default = "external-secrets"
 }
 
 variable "namespace" {
@@ -123,7 +123,7 @@ variable "namespace" {
 }
 
 variable "create_namespace" {
-  type = bool
+  type    = bool
   default = true
 }
 

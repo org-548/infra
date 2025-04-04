@@ -24,7 +24,7 @@ spec:
             - name: SM_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: m-eks-secret
-                  key: address    
+                  name: k8s-secret-from-aws
+                  key: secret-key-in-k8s    
 
 

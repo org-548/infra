@@ -32,12 +32,12 @@ data "aws_subnets" "pub" {
 }
 
 resource "aws_eks_cluster" "this" {
-  name     = var.cluster_name
+  name = var.cluster_name
   #version  = var.eks_version
   role_arn = aws_iam_role.for_eks.arn
 
   access_config {
-    authentication_mode = "API"
+    authentication_mode                         = "API"
     bootstrap_cluster_creator_admin_permissions = var.admin_permission
   }
 
@@ -49,9 +49,9 @@ resource "aws_eks_cluster" "this" {
 }
 
 resource "aws_eks_access_entry" "for_local_access" {
-  cluster_name      = aws_eks_cluster.this.name
-  principal_arn     = var.user_arn
-  type              = var.type
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = var.user_arn
+  type          = var.type
 }
 
 resource "aws_eks_access_policy_association" "for_local_access" {
@@ -60,7 +60,7 @@ resource "aws_eks_access_policy_association" "for_local_access" {
   principal_arn = var.user_arn
 
   access_scope {
-    type       = var.access_scope
+    type = var.access_scope
   }
 }
 
@@ -180,7 +180,7 @@ data "aws_iam_policy_document" "access_to_sm" {
 }
 
 resource "aws_iam_role" "for_sm_secret" {
-  name = "access_to_sm_secret"
+  name               = "access_to_sm_secret"
   assume_role_policy = data.aws_iam_policy_document.access_to_sm.json
 }
 

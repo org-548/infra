@@ -3,28 +3,28 @@ data "aws_eks_cluster" "this" {
 }
 
 data "aws_eks_cluster_auth" "this" {
-  name = aws_eks_cluster.this.name
+  name       = aws_eks_cluster.this.name
   depends_on = [aws_eks_cluster.this]
 }
 
 #provider "helm" {
-  #kubernetes {
-    #host                   = data.aws_eks_cluster.this.endpoint
-    #cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
-    #token                  = data.aws_eks_cluster_auth.this.token
-  #}
+#kubernetes {
+#host                   = data.aws_eks_cluster.this.endpoint
+#cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+#token                  = data.aws_eks_cluster_auth.this.token
+#}
 #}
 
 #provider "helm" {
-  #kubernetes {
-    #host                   = data.aws_eks_cluster.this.endpoint
-    #cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
-    #exec {
-      #api_version = "client.authentication.k8s.io/v1beta1"
-      #args        = ["eks", "get-token", "--cluster-name", var.cluster_name, "--output", "json"]
-      #command     = "aws"
-    #}
-  #}
+#kubernetes {
+#host                   = data.aws_eks_cluster.this.endpoint
+#cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+#exec {
+#api_version = "client.authentication.k8s.io/v1beta1"
+#args        = ["eks", "get-token", "--cluster-name", var.cluster_name, "--output", "json"]
+#command     = "aws"
+#}
+#}
 #}
 
 
@@ -38,10 +38,10 @@ provider "helm" {
 }
 
 resource "helm_release" "external_secret" {
-  name = var.release_name
+  name       = var.release_name
   repository = var.helm_repo
-  chart = var.chart
-  namespace = "kube-system"
+  chart      = var.chart
+  namespace  = "kube-system"
   #create_namespace = var.create_namespace
   version = var.chart_version
 }

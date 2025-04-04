@@ -9,7 +9,7 @@ variable "enable_s3" {
 }
 
 variable "enable_ecr" {
-  type = bool
+  type    = bool
   default = true
 }
 
