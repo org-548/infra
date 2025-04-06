@@ -8,7 +8,7 @@ deploy:
     cnt_port: 4000
   image: 
     name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/server-repo
-    tag: 4f75a7e6
+    tag: ab87214c
  
 service:
   name: srv-svc
