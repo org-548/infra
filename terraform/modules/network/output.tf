@@ -106,7 +106,7 @@ output "subnets_with_for" {
 }
 
 output "subnets_from_data" {
-  value = data.aws_subnets.ids
+  value = data.aws_subnets.pub.ids
 }
 
 #output "subnets" {
