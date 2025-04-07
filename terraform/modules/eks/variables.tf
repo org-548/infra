@@ -38,6 +38,18 @@ variable "node_group_role_name" {
   default = "node-group-role"
 }
 
+variable "node_group_role_vers" {
+  default = "2012-10-17"
+}
+
+variable "node_group_role_action" {
+  default = "sts:AssumeRole"
+}
+
+variable "node_group_role_effect" {
+  default = "Allow"
+}
+
 variable "role_service" {
   default = "ec2.amazonaws.com"
 }
@@ -87,6 +99,35 @@ variable "oidc_client_ids" {
   default = ["sts.amazonaws.com"]
 }
 
+variable "s3_access_policy_name" {
+  default = "eks-access-to-s3"
+}
+
+variable "s3_access_policy_action" {
+  type = list(string)
+  default = [
+    "s3:ListAllMyBuckets",
+    "s3:GetBucketLocation",
+    "s3:DeleteObject",
+    "s3:GetObject",
+    "s3:GetObjectAcl",
+    "s3:PutObject",
+    "s3:PutObjectAcl"
+  ]
+}
+
+variable "s3_access_policy_effect" {
+  default = "Allow"
+}
+
+variable "s3_access_policy_resource" {
+  default = "arn:aws:s3:::*"
+}
+
+variable "sm_secret_access_role_name" {
+  default = "access_to_sm_secret"
+}
+
 variable "policy_name" {
   default = "for-access-to-SM"
 }
@@ -107,6 +148,10 @@ variable "policy_action" {
   ]
 }
 
+variable "policy_resource" {
+  default = "*"
+}
+
 variable "secret_arn" {}
 
 variable "release_name" {
@@ -121,67 +166,16 @@ variable "chart" {
   default = "external-secrets"
 }
 
-variable "namespace" {
-  default = "somens"
+variable "chart_ns" {
+  default = "kube-system"
 }
 
-variable "create_namespace" {
+variable "create_ns" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "chart_version" {
   default = "v0.9.20"
 }
-
-variable "generic_driver_name" {
-  default = "secrets-store-csi-driver"
-}
-
-variable "generic_driver_repo" {
-  default = "https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts"
-}
-
-variable "generic_driver_chart" {
-  default = "secrets-store-csi-driver"
-}
-
-#variable "namespace" {
-#  default = "somens"
-#}
-
-variable "create_ns" {
-  type    = bool
-  default = true
-}
-
-variable "version_for_generic" {
-  default = "1.4.3"
-}
-
-variable "option" {
-  default = "syncSecret.enabled"
-}
-
-variable "option_value" {
-  type    = bool
-  default = true
-}
-
-variable "specific_deiver_name" {
-  default = "secrets-store-csi-driver-aws"
-}
-
-variable "specific_driver_repo" {
-  default = "https://aws.github.io/secrets-store-csi-driver-provider-aws"
-}
-
-variable "specific_driver_chart" {
-  default = "secrets-store-csi-driver-provider-aws"
-}
-
-variable "version_for_specific" {
-  default = "0.3.8"
-}
-
 

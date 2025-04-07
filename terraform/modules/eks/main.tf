@@ -1,5 +1,3 @@
-#Provides permissions for the Kubernetes control plane to 
-#make calls to AWS API operations on your behalf.
 resource "aws_iam_role" "for_eks" {
   name = var.eks_role_name
 
@@ -24,16 +22,9 @@ resource "aws_iam_role_policy_attachment" "this" {
   role       = aws_iam_role.for_eks.name
 }
 
-#data "aws_subnets" "pub" {
-#  filter {
-#    name   = "vpc-id"
-#    values = [var.vpc_id]
-#  }
-#}
 
 resource "aws_eks_cluster" "this" {
-  name = var.cluster_name
-  #version  = var.eks_version
+  name     = var.cluster_name
   role_arn = aws_iam_role.for_eks.arn
 
   access_config {
@@ -42,10 +33,9 @@ resource "aws_eks_cluster" "this" {
   }
 
   vpc_config {
-    #subnet_ids = [for i in data.aws_subnets.pub.ids : i]
-    subnet_ids = var.subnets 
+    subnet_ids = var.subnets
   }
-    depends_on = [aws_iam_role_policy_attachment.this]
+  depends_on = [aws_iam_role_policy_attachment.this]
 }
 
 resource "aws_eks_access_entry" "for_local_access" {
@@ -69,10 +59,10 @@ resource "aws_iam_role" "for_node_group" {
   name = var.node_group_role_name
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
+    Version = var.node_group_role_vers
     Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
+      Action = var.node_group_role_action
+      Effect = var.node_group_role_effect
       Principal = {
         Service = var.role_service
       }
@@ -80,19 +70,16 @@ resource "aws_iam_role" "for_node_group" {
   })
 }
 
-#Provide access to ec2 and eks for worker nodes
 resource "aws_iam_role_policy_attachment" "ec2_eks_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.for_node_group.name
 }
 
-#Provide permission to VPC CNI for interaction with ENI on your behalf
 resource "aws_iam_role_policy_attachment" "eni_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role       = aws_iam_role.for_node_group.name
 }
 
-#Provide access to ECR
 resource "aws_iam_role_policy_attachment" "ecr_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.for_node_group.name
@@ -102,12 +89,9 @@ resource "aws_eks_node_group" "this" {
   cluster_name    = aws_eks_cluster.this.name
   node_group_name = var.node_group_name
   node_role_arn   = aws_iam_role.for_node_group.arn
-
-  #subnet_ids = [for i in data.aws_subnets.pub.ids : i]
-  subnet_ids = var.subnets
-
-  capacity_type  = var.node_capacity_type
-  instance_types = var.node_instance_type
+  subnet_ids      = var.subnets
+  capacity_type   = var.node_capacity_type
+  instance_types  = var.node_instance_type
 
   scaling_config {
     desired_size = var.desired_size
@@ -141,23 +125,14 @@ resource "aws_iam_openid_connect_provider" "eks_oidc" {
 }
 
 resource "aws_iam_policy" "access_to_s3" {
-  name = "eks-access-to-s3"
+  name = var.s3_access_policy_name
 
   policy = jsonencode({
-    Version = "2012-10-17"
+    Version = var.node_group_role_vers
     Statement = [{
-      Action = [
-        "s3:ListAllMyBuckets",
-        "s3:GetBucketLocation",
-        "s3:DeleteObject",
-        "s3:GetObject",
-        "s3:GetObjectAcl",
-        "s3:PutObject",
-        "s3:PutObjectAcl",
-        #"s3:ListBucket"
-      ]
-      Effect   = "Allow"
-      Resource = "arn:aws:s3:::*"
+      Action   = var.s3_access_policy_action
+      Effect   = var.s3_access_policy_effect
+      Resource = var.s3_access_policy_resource
     }]
   })
 }
@@ -181,7 +156,7 @@ data "aws_iam_policy_document" "access_to_sm" {
 }
 
 resource "aws_iam_role" "for_sm_secret" {
-  name               = "access_to_sm_secret"
+  name               = var.sm_secret_access_role_name
   assume_role_policy = data.aws_iam_policy_document.access_to_sm.json
 }
 
@@ -195,13 +170,12 @@ resource "aws_iam_policy" "access_to_secrets_manager" {
   description = var.policy_desc
 
   policy = jsonencode({
-    Version = "2012-10-17"
+    Version = var.node_group_role_vers
     Statement = [
       {
         Effect   = var.policy_effect
         Action   = var.policy_action
-        Resource = "*"
-        #Resource = var.secret_arn
+        Resource = var.policy_resource
       }
     ]
   })
@@ -212,34 +186,3 @@ resource "aws_iam_role_policy_attachment" "for_sm_secret" {
   policy_arn = aws_iam_policy.access_to_secrets_manager.arn
 }
 
-output "test_policy_arn" {
-  value = aws_iam_role.for_sm_secret.arn
-}
-
-#data "aws_iam_policy_document" "prepare_sa_role_binding" {
-#  statement {
-#    actions = ["sts:AssumeRoleWithWebIdentity"]
-#    effect  = "Allow"
-#
-#    #condition{}
-#
-#    principals {
-#      identifiers = [aws_iam_openid_connect_provider.eks_oidc.arn]
-#      type        = "Federated"
-#    }
-#  }
-#}
-
-#resource "aws_iam_role" "test_oidc" {
-#  assume_role_policy = data.aws_iam_policy_document.prepare_sa_role_binding.json
-#  name               = "test-oidc-role"
-#}
-
-#resource "kubernetes_service_account" "s3_sa" {
-#  automount_service_account_token = true
-#  metadata {
-#    name = "for-access-to-s3"
-#    namespace = "default"
-#    #annotations = {}
-#  }
-#}

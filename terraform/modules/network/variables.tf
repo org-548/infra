@@ -35,12 +35,6 @@ variable "vpc_additional_tag" {
   default = "VPC from tf"
 }
 
-#For multi-example Vpc
-variable "vpc_cnt" {
-  type    = number
-  default = 0
-}
-
 variable "vpc_cidr_list" {
   default     = []
   description = "Cidr_block list for Vpc"
@@ -87,11 +81,6 @@ variable "pub_sub_tag" {
 
 variable "priv_sub_tag" {
   default = "Custom Private Subnet"
-}
-
-variable "subnets_data_cnt" {
-  type    = number
-  default = 5
 }
 
 #Eip/NAT

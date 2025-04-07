@@ -61,57 +61,53 @@ output "pub_sub_arn" {
   value = aws_subnet.pub.*.arn
 }
 
-#output "priv_sub_id" {
-  #value = aws_subnet.priv.*.id
-#}
+output "priv_sub_id" {
+  value = aws_subnet.priv.*.id
+}
 
-#output "priv_sub_arn" {
-  #value = aws_subnet.priv.*.arn
-#}
+output "priv_sub_arn" {
+  value = aws_subnet.priv.*.arn
+}
 
 output "pub_sub_az" {
   value = aws_subnet.pub.*.availability_zone
 }
 
-#output "priv_sub_az" {
-  #value = aws_subnet.priv.*.availability_zone
-#}
+output "priv_sub_az" {
+  value = aws_subnet.priv.*.availability_zone
+}
 
 output "pub_sub_cidr" {
   value = aws_subnet.pub.*.cidr_block
 }
 
-#output "priv_sub_cidr" {
-  #value = aws_subnet.priv.*.cidr_block
-#}
+output "priv_sub_cidr" {
+  value = aws_subnet.priv.*.cidr_block
+}
 
 output "pub_sub_vpc" {
   value = aws_subnet.pub.*.vpc_id
 }
 
-#output "priv_sub_vpc" {
-  #value = aws_subnet.priv.*.vpc_id
-#}
+output "priv_sub_vpc" {
+  value = aws_subnet.priv.*.vpc_id
+}
 
 output "pub_sub_tags" {
   value = aws_subnet.pub.*.tags
 }
 
-#output "priv_sub_tags" {
-  #value = aws_subnet.priv.*.tags
-#}
+output "priv_sub_tags" {
+  value = aws_subnet.priv.*.tags
+}
 
-#output "subnets_with_for" {
-  #value = [for subnet in data.aws_subnets.pub : subnet.id]
-#}
+output "subnets_with_for" {
+  value = [for subnet in data.aws_subnets.pub : subnet.id]
+}
 
 output "subnets_from_data" {
   value = data.aws_subnets.pub.ids
 }
-
-#output "subnets" {
-#  value = [for subnet in aws_subnet.pub.*.id : subnet.id]
-#}
 
 #Eip/NAT
 output "eip_id" {
@@ -151,38 +147,38 @@ output "rt_pub_id" {
   value = aws_route_table.for_pub_sub.id
 }
 
-#output "rt_priv_id" {
-#  value = aws_route_table.for_priv_sub.*.id
-#}
+output "rt_priv_id" {
+  value = aws_route_table.for_priv_sub.*.id
+}
 
 output "rt_pub_arn" {
   value = aws_route_table.for_pub_sub.arn
 }
 
-#output "rt_priv_arn" {
-#  value = aws_route_table.for_priv_sub.*.arn
-#}
+output "rt_priv_arn" {
+  value = aws_route_table.for_priv_sub.*.arn
+}
 
 output "rt_pub_tags" {
   value = aws_route_table.for_pub_sub.tags_all
 }
 
-#output "rt_priv_tags" {
-#  value = aws_route_table.for_priv_sub.*.tags_all
-#}
+output "rt_priv_tags" {
+  value = aws_route_table.for_priv_sub.*.tags_all
+}
 
-#output "rt_pub_cidr" {
-#  value = aws_route_table.for_pub_sub.cidr_block
-#}
+output "rt_pub_cidr" {
+  value = aws_route_table.for_pub_sub.cidr_block
+}
 
-#output "rt_priv_cidr" {
-#  value = aws_route_table.for_priv_sub.*.cidr_block
-#}
+output "rt_priv_cidr" {
+  value = aws_route_table.for_priv_sub.*.cidr_block
+}
 
-#output "rt_iwg_id" {
-#  value = aws_route_table.for_pub_sub.gateway_id
-#}
+output "rt_iwg_id" {
+  value = aws_route_table.for_pub_sub.gateway_id
+}
 
-#output "rt_nat_id" {
-#  value = aws_route_table.for_priv_sub.*.nat_gateway_id
-#}
+output "rt_nat_id" {
+  value = aws_route_table.for_priv_sub.*.nat_gateway_id
+}

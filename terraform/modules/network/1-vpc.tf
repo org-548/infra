@@ -1,5 +1,4 @@
 resource "aws_vpc" "vpc" {
-  #count = var.vpc_cnt
   cidr_block                           = var.vpc_cidr
   instance_tenancy                     = var.tenancy
   enable_dns_support                   = var.dns_support

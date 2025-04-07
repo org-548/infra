@@ -73,10 +73,6 @@ variable "versioning" {
   default = "Enabled"
 }
 
-#variable "mfa_delete" {
-#  default = "Disabled"
-#}
-
 variable "policy_doc_cnt" {
   type    = number
   default = 1

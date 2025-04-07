@@ -18,9 +18,6 @@ variable "enable_secrets_man" {
   default = true
 }
 
-
-#variable "app_unit" {}
-
 #variable "enable_eks" {
 #  type    = bool
 #  default = true
