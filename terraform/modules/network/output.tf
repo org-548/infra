@@ -147,33 +147,33 @@ output "rt_pub_id" {
   value = aws_route_table.for_pub_sub.id
 }
 
-output "rt_priv_id" {
-  value = aws_route_table.for_priv_sub.*.id
-}
+#output "rt_priv_id" {
+#  value = aws_route_table.for_priv_sub.*.id
+#}
 
 output "rt_pub_arn" {
   value = aws_route_table.for_pub_sub.arn
 }
 
-output "rt_priv_arn" {
-  value = aws_route_table.for_priv_sub.*.arn
-}
+#output "rt_priv_arn" {
+#  value = aws_route_table.for_priv_sub.*.arn
+#}
 
 output "rt_pub_tags" {
   value = aws_route_table.for_pub_sub.tags_all
 }
 
-output "rt_priv_tags" {
-  value = aws_route_table.for_priv_sub.*.tags_all
-}
+#output "rt_priv_tags" {
+#  value = aws_route_table.for_priv_sub.*.tags_all
+#}
 
 #output "rt_pub_cidr" {
 #  value = aws_route_table.for_pub_sub.cidr_block
 #}
 
-output "rt_priv_cidr" {
-  value = aws_route_table.for_priv_sub.*.cidr_block
-}
+#output "rt_priv_cidr" {
+#  value = aws_route_table.for_priv_sub.*.cidr_block
+#}
 
 #output "rt_iwg_id" {
 #  value = aws_route_table.for_pub_sub.gateway_id
