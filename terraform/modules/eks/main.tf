@@ -24,12 +24,12 @@ resource "aws_iam_role_policy_attachment" "this" {
   role       = aws_iam_role.for_eks.name
 }
 
-data "aws_subnets" "pub" {
-  filter {
-    name   = "vpc-id"
-    values = [var.vpc_id]
-  }
-}
+#data "aws_subnets" "pub" {
+#  filter {
+#    name   = "vpc-id"
+#    values = [var.vpc_id]
+#  }
+#}
 
 resource "aws_eks_cluster" "this" {
   name = var.cluster_name
@@ -42,10 +42,10 @@ resource "aws_eks_cluster" "this" {
   }
 
   vpc_config {
-    subnet_ids = [for i in data.aws_subnets.pub.ids : i]
+    #subnet_ids = [for i in data.aws_subnets.pub.ids : i]
+    subnet_ids = var.subnets 
   }
-
-  depends_on = [aws_iam_role_policy_attachment.this]
+    depends_on = [aws_iam_role_policy_attachment.this]
 }
 
 resource "aws_eks_access_entry" "for_local_access" {

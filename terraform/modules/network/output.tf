@@ -101,8 +101,12 @@ output "pub_sub_tags" {
   #value = aws_subnet.priv.*.tags
 #}
 
-output "subnets" {
+output "subnets_with_for" {
   value = [for subnet in data.aws_subnets.pub : subnet.id]
+}
+
+output "subnets_from_data" {
+  value = data.aws_subnets.ids
 }
 
 #output "subnets" {

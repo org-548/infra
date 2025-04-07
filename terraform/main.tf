@@ -25,5 +25,5 @@ module "eks" {
 
   vpc_id     = module.network[0].vpc_id
   secret_arn = module.secrets_manager[0].secret_arn
-  subnets = module.network[0].subnets
+  subnets = module.network[0].subnets_from_data
 }

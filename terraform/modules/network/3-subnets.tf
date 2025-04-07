@@ -35,5 +35,5 @@ data "aws_subnets" "pub" {
     name   = "vpc-id"
     values = [aws_vpc.vpc.id]
   }
-  depends_on = [aws_subnet.pub]
+  depends_on = [aws_subnet.https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_clusterpub]
 }
