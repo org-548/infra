@@ -91,7 +91,7 @@ variable "priv_sub_tag" {
 
 variable "subnets_data_cnt" {
   type    = number
-  default = 1
+  default = 5
 }
 
 #Eip/NAT
