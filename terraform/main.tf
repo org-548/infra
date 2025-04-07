@@ -24,4 +24,5 @@ module "eks" {
 
   vpc_id     = module.network[0].vpc_id
   secret_arn = module.secrets_manager[0].secret_arn
+  depends_on = [module.network[0]]
 }
