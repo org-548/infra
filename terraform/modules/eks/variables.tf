@@ -50,6 +50,9 @@ variable "node_capacity_type" {
   default = "ON_DEMAND"
 }
 
+#Missing
+variable "subnets" {}
+
 variable "node_instance_type" {
   type    = list(string)
   default = ["t3.small"]

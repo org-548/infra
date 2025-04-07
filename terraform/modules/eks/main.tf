@@ -103,7 +103,8 @@ resource "aws_eks_node_group" "this" {
   node_group_name = var.node_group_name
   node_role_arn   = aws_iam_role.for_node_group.arn
 
-  subnet_ids = [for i in data.aws_subnets.pub.ids : i]
+  #subnet_ids = [for i in data.aws_subnets.pub.ids : i]
+  subnet_ids = var.subnets
 
   capacity_type  = var.node_capacity_type
   instance_types = var.node_instance_type
