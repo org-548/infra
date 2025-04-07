@@ -30,7 +30,7 @@ resource "aws_subnet" "pub" {
 #}
 
 data "aws_subnets" "pub" {
-  count = var.subnets_data_cnt
+  #count = var.subnets_data_cnt
   filter {
     name   = "vpc-id"
     values = [aws_vpc.vpc.id]
