@@ -1,9 +1,3 @@
-resource "aws_default_vpc" "vpc" {
-  tags = {
-    Name = "Default VPC"
-  }
-}
-
 resource "aws_vpc" "vpc" {
   #count = var.vpc_cnt
   cidr_block                           = var.vpc_cidr
