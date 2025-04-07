@@ -179,6 +179,6 @@ output "rt_pub_tags" {
 #  value = aws_route_table.for_pub_sub.gateway_id
 #}
 
-output "rt_nat_id" {
-  value = aws_route_table.for_priv_sub.*.nat_gateway_id
-}
+#output "rt_nat_id" {
+#  value = aws_route_table.for_priv_sub.*.nat_gateway_id
+#}
