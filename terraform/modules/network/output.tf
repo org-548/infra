@@ -61,45 +61,45 @@ output "pub_sub_arn" {
   value = aws_subnet.pub.*.arn
 }
 
-output "priv_sub_id" {
-  value = aws_subnet.priv.*.id
-}
+#output "priv_sub_id" {
+  #value = aws_subnet.priv.*.id
+#}
 
-output "priv_sub_arn" {
-  value = aws_subnet.priv.*.arn
-}
+#output "priv_sub_arn" {
+  #value = aws_subnet.priv.*.arn
+#}
 
 output "pub_sub_az" {
   value = aws_subnet.pub.*.availability_zone
 }
 
-output "priv_sub_az" {
-  value = aws_subnet.priv.*.availability_zone
-}
+#output "priv_sub_az" {
+  #value = aws_subnet.priv.*.availability_zone
+#}
 
 output "pub_sub_cidr" {
   value = aws_subnet.pub.*.cidr_block
 }
 
-output "priv_sub_cidr" {
-  value = aws_subnet.priv.*.cidr_block
-}
+#output "priv_sub_cidr" {
+  #value = aws_subnet.priv.*.cidr_block
+#}
 
 output "pub_sub_vpc" {
   value = aws_subnet.pub.*.vpc_id
 }
 
-output "priv_sub_vpc" {
-  value = aws_subnet.priv.*.vpc_id
-}
+#output "priv_sub_vpc" {
+  #value = aws_subnet.priv.*.vpc_id
+#}
 
 output "pub_sub_tags" {
   value = aws_subnet.pub.*.tags
 }
 
-output "priv_sub_tags" {
-  value = aws_subnet.priv.*.tags
-}
+#output "priv_sub_tags" {
+  #value = aws_subnet.priv.*.tags
+#}
 
 output "subnets" {
   value = [for subnet in data.aws_subnets.pub : subnet.id]
