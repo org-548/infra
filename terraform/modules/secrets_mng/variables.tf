@@ -1,5 +1,5 @@
 variable "secret_name" {
-  default = "m-eks-secret"
+  default = "n-eks-secret"
 }
 
 variable "secret_desc" {
