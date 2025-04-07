@@ -166,19 +166,3 @@ output "rt_pub_tags" {
 output "rt_priv_tags" {
   value = aws_route_table.for_priv_sub.*.tags_all
 }
-
-output "rt_pub_cidr" {
-  value = aws_route_table.for_pub_sub.cidr_block
-}
-
-output "rt_priv_cidr" {
-  value = aws_route_table.for_priv_sub.*.cidr_block
-}
-
-#output "rt_iwg_id" {
-  #value = aws_route_table.for_pub_sub.gateway_id
-#}
-
-output "rt_nat_id" {
-  value = aws_route_table.for_priv_sub.*.nat_gateway_id
-}
