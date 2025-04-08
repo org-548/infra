@@ -1,20 +1,16 @@
 resource "aws_iam_role" "for_eks" {
   name = var.eks_role_name
 
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "eks.amazonaws.com"
+  assume_role_policy = jsonencode({
+    Version = var.node_group_role_vers
+    Statement = [{
+      Action = var.eks_role_action
+      Effect = var.eks_role_effect
+      Principal = {
+        Service = var.eks_role_principal
       }
-    }
-  ]
-}
-POLICY
+    }]
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "this" {
