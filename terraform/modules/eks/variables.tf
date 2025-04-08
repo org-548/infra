@@ -111,31 +111,6 @@ variable "oidc_client_ids" {
   default = ["sts.amazonaws.com"]
 }
 
-variable "s3_access_policy_name" {
-  default = "eks-access-to-s3"
-}
-
-variable "s3_access_policy_action" {
-  type = list(string)
-  default = [
-    "s3:ListAllMyBuckets",
-    "s3:GetBucketLocation",
-    "s3:DeleteObject",
-    "s3:GetObject",
-    "s3:GetObjectAcl",
-    "s3:PutObject",
-    "s3:PutObjectAcl"
-  ]
-}
-
-variable "s3_access_policy_effect" {
-  default = "Allow"
-}
-
-variable "s3_access_policy_resource" {
-  default = "arn:aws:s3:::*"
-}
-
 variable "sm_secret_access_role_name" {
   default = "access_to_sm_secret"
 }
