@@ -106,30 +106,17 @@ resource "aws_eks_node_group" "this" {
   ]
 }
 
-data "tls_certificate" "eks_oidc" {
+data "tls_certificate" "for_eks_oidc" {
   url = aws_eks_cluster.this.identity[0].oidc[0].issuer
 }
 
-resource "aws_iam_openid_connect_provider" "eks_oidc" {
+resource "aws_iam_openid_connect_provider" "for_eks_oidc" {
   client_id_list  = var.oidc_client_ids
-  thumbprint_list = [data.tls_certificate.eks_oidc.certificates[0].sha1_fingerprint]
+  thumbprint_list = [data.tls_certificate.for_eks_oidc.certificates[0].sha1_fingerprint]
   url             = aws_eks_cluster.this.identity[0].oidc[0].issuer
 }
 
-resource "aws_iam_policy" "access_to_s3" {
-  name = var.s3_access_policy_name
-
-  policy = jsonencode({
-    Version = var.node_group_role_vers
-    Statement = [{
-      Action   = var.s3_access_policy_action
-      Effect   = var.s3_access_policy_effect
-      Resource = var.s3_access_policy_resource
-    }]
-  })
-}
-
-data "aws_iam_policy_document" "access_to_sm" {
+data "aws_iam_policy_document" "trust_policy" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     effect  = "Allow"
@@ -147,14 +134,9 @@ data "aws_iam_policy_document" "access_to_sm" {
   }
 }
 
-resource "aws_iam_role" "for_sm_secret" {
+resource "aws_iam_role" "eks_oidc_role" {
   name               = var.sm_secret_access_role_name
-  assume_role_policy = data.aws_iam_policy_document.access_to_sm.json
-}
-
-resource "aws_iam_role_policy_attachment" "oidc_test" {
-  role       = aws_iam_role.for_sm_secret.name
-  policy_arn = aws_iam_policy.access_to_s3.arn
+  assume_role_policy = data.aws_iam_policy_document.trust_policy.json
 }
 
 resource "aws_iam_policy" "access_to_secrets_manager" {
@@ -174,7 +156,7 @@ resource "aws_iam_policy" "access_to_secrets_manager" {
 }
 
 resource "aws_iam_role_policy_attachment" "for_sm_secret" {
-  role       = aws_iam_role.for_sm_secret.name
+  role       = aws_iam_role.eks_oidc_role.name
   policy_arn = aws_iam_policy.access_to_secrets_manager.arn
 }
 
