@@ -123,12 +123,12 @@ data "aws_iam_policy_document" "trust_policy" {
 
     condition {
       test     = "StringEquals"
-      variable = "${replace(aws_iam_openid_connect_provider.eks_oidc.url, "https://", "")}:sub"
+      variable = "${replace(aws_iam_openid_connect_provider.for_eks_oidc.url, "https://", "")}:sub"
       values   = ["system:serviceaccount:somens:m-service-account"]
     }
 
     principals {
-      identifiers = [aws_iam_openid_connect_provider.eks_oidc.arn]
+      identifiers = [aws_iam_openid_connect_provider.for_eks_oidc.arn]
       type        = "Federated"
     }
   }
