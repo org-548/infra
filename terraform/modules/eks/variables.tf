@@ -2,6 +2,18 @@ variable "eks_role_name" {
   default = "eksClusterRole"
 }
 
+variable "eks_role_action" {
+  default = "sts:AssumeRole"
+}
+
+variable "eks_role_effect" {
+  default = "Allow"
+}
+
+variable "eks_role_principal" {
+  default = "eks.amazonaws.com"
+}
+
 #Missing
 variable "vpc_id" {}
 
