@@ -95,10 +95,6 @@ resource "aws_eks_node_group" "this" {
     min_size     = var.min_size
   }
 
-  update_config {
-    max_unavailable = var.max_unavailable
-  }
-
   labels = {
     role = var.node_group_label
   }
