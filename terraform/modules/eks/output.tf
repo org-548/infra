@@ -71,15 +71,7 @@ output "node_group_status" {
 }
 
 output "oidc_provider_arn" {
-  value = aws_iam_openid_connect_provider.eks_oidc.arn
-}
-
-output "s3_access_policy_arn" {
-  value = aws_iam_policy.access_to_s3.arn
-}
-
-output "s3_access_policy_id" {
-  value = aws_iam_policy.access_to_s3.id
+  value = aws_iam_openid_connect_provider.for_eks_oidc.arn
 }
 
 output "sm_access_policy_arn" {
