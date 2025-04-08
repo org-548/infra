@@ -1,5 +1,3 @@
-data "aws_caller_identity" "current" {}
-
 resource "aws_ecr_repository" "different" {
   count                = var.ecr_cnt
   name                 = var.ecr_repo_name[count.index]
