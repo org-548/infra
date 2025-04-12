@@ -11,8 +11,8 @@ releases:
     chart:
       name: ./app
     tags: [backend]
-    values:
-      - values/srv-values.yaml
+    #values:
+      #- values/srv-values.yaml
     <<: *options
         
   - name: frontend
