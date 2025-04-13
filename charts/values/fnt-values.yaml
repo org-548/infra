@@ -8,7 +8,7 @@ deploy:
     cnt_port: 80
   image: 
     name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/client-repo
-    tag: cf48701
+    tag: 3bb33d5710eb631fa8f6482160922c6dd6da5bfb
  
 
 service:
