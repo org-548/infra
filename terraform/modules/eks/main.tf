@@ -135,7 +135,7 @@ data "aws_iam_policy_document" "trust_policy" {
 }
 
 resource "aws_iam_role" "eks_oidc_role" {
-  name               = var.sm_secret_access_role_name
+  name               = var.eks_oidc_role_name
   assume_role_policy = data.aws_iam_policy_document.trust_policy.json
 }
 

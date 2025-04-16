@@ -111,8 +111,8 @@ variable "oidc_client_ids" {
   default = ["sts.amazonaws.com"]
 }
 
-variable "sm_secret_access_role_name" {
-  default = "access_to_sm_secret"
+variable "eks_oidc_role_name" {
+  default = "eks-oidc-role"
 }
 
 variable "policy_name" {
