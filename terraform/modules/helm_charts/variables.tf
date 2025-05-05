@@ -1,3 +1,5 @@
+variable "thingy" {}
+
 variable "eks_cluster_data" {
   type = number
   default = 1

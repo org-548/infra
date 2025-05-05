@@ -1,6 +1,7 @@
 data "aws_eks_cluster" "this" {
   count = var.eks_cluster_data
   name  = var.cluster_name
+  depends_on = [var.thingy]
 }
 
 data "aws_eks_cluster_auth" "this" {
