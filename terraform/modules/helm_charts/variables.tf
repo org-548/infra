@@ -1,3 +1,17 @@
+variable "eks_cluster_data" {
+  type = number
+  default = 1
+}
+
+variable "cluster_name" {
+  default = "first-eks"
+}
+
+variable "eks_cluster_auth_data" {
+  type = number
+  default = 1
+}
+
 variable "ex_secret_helm_release" {
   type    = number
   default = 1

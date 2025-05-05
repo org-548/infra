@@ -34,17 +34,17 @@ output "cluster_status" {
   value = aws_eks_cluster.this[0].status
 }
 
-#output "access_entry_arn" {
-#  value = aws_eks_access_entry.for_local_access[0].access_entry_arn
-#}
-#
-#output "access_entry_created" {
-#  value = aws_eks_access_entry.for_local_access[0].created_at
-#}
-#
-#output "access_entry_modified" {
-#  value = aws_eks_access_entry.for_local_access[0].modified_at
-#}
+output "access_entry_arn" {
+  value = aws_eks_access_entry.for_local_access[0].access_entry_arn
+}
+
+output "access_entry_created" {
+  value = aws_eks_access_entry.for_local_access[0].created_at
+}
+
+output "access_entry_modified" {
+  value = aws_eks_access_entry.for_local_access[0].modified_at
+}
 
 output "node_group_arn" {
   value = aws_eks_node_group.this[0].arn
@@ -60,13 +60,5 @@ output "node_group_res" {
 
 output "node_group_status" {
   value = aws_eks_node_group.this[0].status
-}
-
-output "cluster_endpoint_data" {
-  value = data.aws_eks_cluster.this[0].endpoint
-}
-
-output "eks_cluster_auth_token" {
-  value = data.aws_eks_cluster_auth.this[0].token
 }
 
