@@ -1,0 +1,19 @@
+namespace: somens
+
+sa_name: m-service-account
+
+create_sa: false
+create_secretStore: false 
+create_externalSecret: false
+
+deploy:
+  label_key: app
+
+ingresses:
+  create: true
+  example:  
+    namespace: somens  
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/use-regex: true
+    class_name: nginx

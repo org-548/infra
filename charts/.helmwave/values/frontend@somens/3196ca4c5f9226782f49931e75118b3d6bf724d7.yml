@@ -1,0 +1,52 @@
+create_secretStore: true
+secret_store:
+  name: aws-secret-store
+  provider:
+    name: aws
+    svc: SecretsManager
+  region: eu-north-1
+
+create_externalSecret: true
+ex_secret:
+  name: ex-secret-name
+  refresh: "0"
+  store_kind: SecretStore
+  target:
+    name: k8s-secret-from-aws
+    cr_policy: Owner
+  secret_key: secret-key-in-k8s
+  key_ref: d-eks-secret
+
+deploy:
+  name: fnt-deploy
+  replica_cnt: 1  
+  label_value: fnt
+  container:
+    name: fnt-cnt
+    cnt_port: 80
+  image: 
+    name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/client-repo
+    tag: 8080e05742b8fd2182257015cd662f8ee9bb8601
+  env_name: SM_SECRET
+  secret_name: 
+  secret_key:     
+ 
+
+service:
+  name: fnt-svc
+  port: 8088
+  targetPort: 80
+
+ingresses:
+  example:
+    name: fnt-ingress
+    rules:
+      - http:
+          paths:
+            - path: /?(.*)
+              pathType: ImplementationSpecific
+              backend:
+                service:
+                  name: fnt-svc
+                  port:
+                    number: 8088

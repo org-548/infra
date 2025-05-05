@@ -1,0 +1,100 @@
+---
+# Source: backend/templates/service.yaml
+apiVersion: v1
+kind: Service  
+metadata:
+  name: fnt-svc
+  namespace: somens
+spec:
+  ports:
+  - port: 8088
+    targetPort: 80    
+  selector:    
+    app: fnt-deploy
+---
+# Source: backend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment  
+metadata:
+  name: fnt-deploy
+  namespace: somens
+spec:
+  replicas: 1  
+  selector:
+    matchLabels:      
+      app: fnt-deploy
+  template:
+    metadata:
+      labels:        
+        app: fnt-deploy
+    spec:
+      serviceAccountName: m-service-account 
+      containers:
+        - name: fnt-cnt
+          image: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/client-repo:8080e05742b8fd2182257015cd662f8ee9bb8601
+          ports:
+            - containerPort: 80    
+          env:
+            - name: SM_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: k8s-secret-from-aws
+                  key: secret-key-in-k8s
+---
+# Source: backend/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fnt-ingress
+  namespace: somens
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/$1"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx  
+  rules:
+    - http:
+        paths:
+          - path: /?(.*)
+            pathType: "ImplementationSpecific"  
+            backend:
+              service:
+                name: fnt-svc
+                port:
+                  number: 8088
+---
+# Source: backend/templates/ex-secret.yaml
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret  
+metadata:
+  name: ex-secret-name
+  namespace: somens
+spec:
+  refreshInterval: "0"
+  secretStoreRef:
+    name: aws-secret-store
+    kind: SecretStore
+  target:
+    name: k8s-secret-from-aws
+    creationPolicy: Owner
+  data:
+  - secretKey: secret-key-in-k8s
+    remoteRef:
+      key: d-eks-secret
+---
+# Source: backend/templates/secret-store.yaml
+apiVersion: external-secrets.io/v1beta1
+kind: SecretStore
+metadata:
+  name: aws-secret-store
+  namespace: somens
+spec:
+  provider:
+    aws:
+      service: SecretsManager
+      region: eu-north-1    
+      auth:
+        jwt:
+          serviceAccountRef:            
+            name: m-service-account
+            namespace: somens

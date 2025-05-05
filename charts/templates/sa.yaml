@@ -1,0 +1,12 @@
+{{- with .Values }}
+{{- if .create_sa }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  {{- include "sa-metadata" . | indent 2 }}
+  annotations:
+    {{- range $key, $value := .sa.annotations }}
+    {{ $key }}: {{ $value }}
+    {{- end }}
+{{- end }}    
+{{- end }}

@@ -1,0 +1,58 @@
+name: Up Helm stack
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - 'some-charts/**'
+  workflow_dispatch:
+
+jobs:
+  Helm-job:
+    name: Helm-job-name
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::637423489195:role/${{ vars.OIDC_ROLE_NAME }}
+          aws-region: eu-north-1
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: 'v1.32.3'
+
+      - name: Udpate kubeconfig
+        run: aws eks update-kubeconfig --region eu-north-1 --name first-eks
+
+      - name: Setup Helmwave
+        run: |
+          export VERSION=0.19.3
+          wget -c https://github.com/helmwave/helmwave/releases/download/v$VERSION/helmwave_${VERSION}_linux_amd64.tar.gz -O - | tar -xz
+          mv helmwave /usr/local/bin/
+
+      - name: Extract iamge-tags and compare
+        working-directory: charts
+        run: |
+          bash cmd.sh
+          bash cmd-2.sh
+          diff val-from-ecr.out val-from-chart.out
+          if [[ $? -eq 0 ]]; then
+            exit 0
+          else
+            echo "Please check if the image(images) is also available in the ECR registry."
+            exit 1
+          fi
+
+      - name: Helmwave build/up
+        working-directory: charts
+        run: helmwave up --build --yml --kubedog

@@ -1,0 +1,67 @@
+---
+# Source: backend/templates/sa.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:  
+  name: m-service-account
+  namespace: somens
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::637423489195:role/eks-oidc-role
+---
+# Source: backend/templates/service.yaml
+apiVersion: v1
+kind: Service  
+metadata:
+  name: srv-svc
+  namespace: somens
+spec:
+  ports:
+  - port: 8084
+    targetPort: 4000    
+  selector:    
+    app: srv-deploy
+---
+# Source: backend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment  
+metadata:
+  name: srv-deploy
+  namespace: somens
+spec:
+  replicas: 1  
+  selector:
+    matchLabels:      
+      app: srv-deploy
+  template:
+    metadata:
+      labels:        
+        app: srv-deploy
+    spec:
+      serviceAccountName: m-service-account 
+      containers:
+        - name: srv-cnt
+          image: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/server-repo:9042b371314b5cbad53e27e97383c18b222f5709
+          ports:
+            - containerPort: 4000
+---
+# Source: backend/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: srv-ingress
+  namespace: somens
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/$1"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx  
+  rules:
+    - http:
+        paths:
+          - path: /api/?(.*)
+            pathType: "ImplementationSpecific"  
+            backend:
+              service:
+                name: srv-svc
+                port:
+                  number: 8084

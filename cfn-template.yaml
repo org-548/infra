@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create GitHub OIDC Provider
+
+Resources:
+  GitHubActionsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: role-for-github-oidc
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !Sub arn:aws:iam::637423489195:oidc-provider/token.actions.githubusercontent.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringLike:
+                'token.actions.githubusercontent.com:sub': [
+                  'repo:org-548/server:*',
+                  'repo:org-548/client:*',
+                  'repo:org-548/infra:*'
+                ]
+              StringEquals:
+                'token.actions.githubusercontent.com:aud': sts.amazonaws.com
+      Policies:
+        - PolicyName: ForOidc
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: GitHubOidcPolicy
+                Effect: Allow
+                Action:
+                  - s3:*
+                  - eks:*
+                  - ec2:*
+                  - iam:*
+                  - ecr:*
+                  - secretsmanager:*  
+                  - cloudformation:DeleteStack
+                  - elasticloadbalancing:DescribeLoadBalancers  
+                Resource: "*"
+
+  GitHubActionsOidcProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      ClientIdList:
+        - sts.amazonaws.com
+      ThumbprintList:
+        - 6938fd4d98bab03faadb97b34396831e3780aea1
+      Url: https://token.actions.githubusercontent.com
+
+

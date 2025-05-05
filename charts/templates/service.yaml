@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+{{- with .Values.service }}  
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Values.namespace }}
+spec:
+  ports:
+  - port: {{ .port }}
+    targetPort: {{ .targetPort }}
+{{- end }}      
+  {{- with .Values.deploy }}    
+  selector:
+    {{- include "deploy-labels" . | indent 4 }}
+  {{- end }}

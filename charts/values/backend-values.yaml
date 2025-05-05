@@ -1,0 +1,35 @@
+create_sa: true
+sa:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::637423489195:role/eks-oidc-role
+  role_name: eks-oidc-role  
+
+deploy:
+  name: srv-deploy
+  replica_cnt: 1  
+  label_value: srv
+  container:
+    name: srv-cnt
+    cnt_port: 4000
+  image: 
+    name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/server-repo
+    tag: f8c0944c11c424473dc82a788965a6a6127638da
+ 
+service:
+  name: srv-svc
+  port: 8084
+  targetPort: 4000
+ 
+ingresses:
+  example:
+    name: srv-ingress
+    rules:
+      - http:
+          paths:
+            - path: /api/?(.*)
+              pathType: ImplementationSpecific
+              backend:
+                service:
+                  name: srv-svc
+                  port:
+                    number: 8084

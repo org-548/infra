@@ -1,0 +1,53 @@
+project: ""
+version: 0.36.3
+repositories: []
+registries: []
+releases:
+    - chart:
+        cafile: ""
+        certfile: ""
+        keyfile: ""
+        insecureskiptlsverify: false
+        keyring: ""
+        password: ""
+        passcredentialsall: false
+        repourl: ""
+        username: ""
+        verify: false
+        version: ""
+        name: .
+      name: backend
+      namespace: somens
+      values:
+        - src: values/backend-values.yaml
+          dst: .helmwave/values/backend@somens/862ad92ae40cd65d0c730cef3112068fc78030dc.yml
+      tags:
+        - backend
+      timeout: 1m40s
+      create_namespace: true
+      wait: true
+    - chart:
+        cafile: ""
+        certfile: ""
+        keyfile: ""
+        insecureskiptlsverify: false
+        keyring: ""
+        password: ""
+        passcredentialsall: false
+        repourl: ""
+        username: ""
+        verify: false
+        version: ""
+        name: .
+      name: frontend
+      namespace: somens
+      depends_on:
+        - backend
+      values:
+        - src: values/frontend-values.yaml
+          dst: .helmwave/values/frontend@somens/3196ca4c5f9226782f49931e75118b3d6bf724d7.yml
+      tags:
+        - frontend
+      timeout: 1m40s
+      create_namespace: true
+      wait: true

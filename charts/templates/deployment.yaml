@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+{{- with .Values.deploy }}  
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Values.namespace }}
+spec:
+  replicas: {{ .replica_cnt }}  
+  selector:
+    matchLabels:
+      {{- include "deploy-labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "deploy-labels" . | indent 8 }}
+    spec:
+      serviceAccountName: {{ $.Values.sa_name }} 
+      containers:
+        - name: {{ .container.name }}
+          image: {{ .image.name }}:{{ .image.tag }}
+          ports:
+            - containerPort: {{ .container.cnt_port }}
+{{- end }}        
+          {{- if eq .Values.deploy.name "fnt-deploy" }}    
+          env:
+            - name: {{ .Values.deploy.env_name }}
+              valueFrom:
+                {{- with .Values.ex_secret }}
+                secretKeyRef:
+                  name: {{ .target.name }}
+                  key: {{ .secret_key }}
+                {{- end }}    
+          {{- end }}          
+
+
