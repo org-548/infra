@@ -24,7 +24,7 @@ variable "admin_permission" {
 
 variable "access_entry_cnt" {
   type    = number
-  default = 0
+  default = 1
 }
 
 variable "user_arn" {

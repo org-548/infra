@@ -3,9 +3,7 @@ variable "eks_cluster_data" {
   default = 1
 }
 
-variable "cluster_name" {
-  default = "first-eks"
-}
+variable "cluster_name" {}
 
 variable "eks_cluster_auth_data" {
   type = number
