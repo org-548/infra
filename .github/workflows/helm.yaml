@@ -43,7 +43,6 @@ jobs:
       - name: Extract iamge-tags and compare
         working-directory: charts
         run: |
-          rm val-from-ecr.out val-from-chart.out
           bash cmd.sh
           bash cmd-2.sh
           diff val-from-ecr.out val-from-chart.out
