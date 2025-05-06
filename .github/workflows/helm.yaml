@@ -5,7 +5,7 @@ on:
     branches:
     - main
     paths:
-    - 'some-charts/**'
+    - 'charts/**'
   workflow_dispatch:
 
 jobs:

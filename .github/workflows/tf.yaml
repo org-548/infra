@@ -5,7 +5,7 @@ on:
     branches:
     - main
     paths:
-    - 'some-terraform/**'
+    - 'terraform/**'
   workflow_dispatch:
 
 jobs:
