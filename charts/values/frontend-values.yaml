@@ -26,7 +26,7 @@ deploy:
     cnt_port: 80
   image: 
     name: 637423489195.dkr.ecr.eu-north-1.amazonaws.com/client-repo
-    tag: 8080e05742b8fd2182257015cd662f8ee9bb8601
+    tag: f293884a95070418fb7904579186e8ad039a43d2
   env_name: SM_SECRET
   secret_name: 
   secret_key:     
