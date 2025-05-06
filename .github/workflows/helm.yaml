@@ -34,12 +34,6 @@ jobs:
       - name: Udpate kubeconfig
         run: aws eks update-kubeconfig --region eu-north-1 --name first-eks
 
-      - name: Setup Helmwave
-        run: |
-          export VERSION=0.19.3
-          wget -c https://github.com/helmwave/helmwave/releases/download/v$VERSION/helmwave_${VERSION}_linux_amd64.tar.gz -O - | tar -xz
-          mv helmwave /usr/local/bin/
-
       - name: Extract iamge-tags and compare
         working-directory: charts
         run: |
@@ -52,6 +46,12 @@ jobs:
             echo "Please check if the image(images) is also available in the ECR registry."
             exit 1
           fi
+
+      - name: Setup Helmwave
+        run: |
+          export VERSION=0.19.3
+          wget -c https://github.com/helmwave/helmwave/releases/download/v$VERSION/helmwave_${VERSION}_linux_amd64.tar.gz -O - | tar -xz
+          mv helmwave /usr/local/bin/
 
       - name: Helmwave build/up
         working-directory: charts
