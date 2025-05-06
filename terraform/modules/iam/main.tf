@@ -20,7 +20,7 @@ data "aws_iam_policy_document" "access_to_s3" {
       type        = var.s3_pol_principal["type"]
       identifiers = [var.s3_pol_principal["value"]]
     }
-    resources = ["arn:aws:s3:::${var.bucket_name}/*"]
+    resources = ["arn:aws:s3:::${var.bucket_name}"]
   }
 
 }
