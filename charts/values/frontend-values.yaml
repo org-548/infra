@@ -15,7 +15,7 @@ ex_secret:
     name: k8s-secret-from-aws
     cr_policy: Owner
   secret_key: secret-key-in-k8s
-  key_ref: some-eks-secret
+  key_ref: n-secret
 
 deploy:
   name: fnt-deploy
