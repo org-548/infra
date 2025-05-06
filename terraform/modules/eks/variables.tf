@@ -105,3 +105,4 @@ variable "eks_cluster_auth_data" {
   type    = number
   default = 1
 }
+

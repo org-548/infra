@@ -2,7 +2,7 @@ data "aws_iam_policy_document" "access_to_s3" {
   count = var.s3_pol_doc_cnt
 
   statement {
-    sid = var.s3_pol_sid
+    sid     = var.s3_pol_sid
     effect  = var.s3_pol_effect
     actions = var.s3_pol_actions
     principals {
@@ -13,8 +13,8 @@ data "aws_iam_policy_document" "access_to_s3" {
   }
 
   statement {
-    sid = var.s3_pol2_sid
-    effect = var.s3_pol2_effect
+    sid     = var.s3_pol2_sid
+    effect  = var.s3_pol2_effect
     actions = var.s3_pol2_action
     principals {
       type        = var.s3_pol_principal["type"]

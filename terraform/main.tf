@@ -34,9 +34,8 @@ module "eks" {
 }
 
 module "helm" {
-  source           = "./modules/helm_charts"
+  source       = "./modules/helm_charts"
   cluster_name = module.eks.cluster_name
-  thingy = module.eks.cluster_id
+  thingy       = module.eks.cluster_id
 }
 
-#Trivial

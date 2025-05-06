@@ -1,21 +1,14 @@
 data "aws_eks_cluster" "this" {
-  count = var.eks_cluster_data
-  name  = var.cluster_name
+  count      = var.eks_cluster_data
+  name       = var.cluster_name
   depends_on = [var.thingy]
 }
 
 data "aws_eks_cluster_auth" "this" {
-  count      = var.eks_cluster_auth_data
-  name       = var.cluster_name
+  count = var.eks_cluster_auth_data
+  name  = var.cluster_name
   #depends_on = [aws_eks_cluster.this[0]]
 }
-
-#provider "kubernetes" {
-#  #config_path = "~/.kube/config"
-#  host = data.aws_eks_cluster.this[0].endpoint
-#  cluster_ca_certificate = base64decode(data.aws_eks_cluster.this[0].certificate_authority.0.data)
-#  token = data.aws_eks_cluster_auth.this[0].token
-#}
 
 provider "helm" {
   kubernetes {

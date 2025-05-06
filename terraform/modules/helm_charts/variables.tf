@@ -1,14 +1,14 @@
 variable "thingy" {}
 
 variable "eks_cluster_data" {
-  type = number
+  type    = number
   default = 1
 }
 
 variable "cluster_name" {}
 
 variable "eks_cluster_auth_data" {
-  type = number
+  type    = number
   default = 1
 }
 

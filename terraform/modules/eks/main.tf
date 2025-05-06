@@ -52,9 +52,5 @@ resource "aws_eks_node_group" "this" {
     role = var.node_group_label
   }
 
-#  depends_on = [
-#    aws_iam_role_policy_attachment.node_group_access_provision
-#  ]
-
 }
 
