@@ -5,7 +5,7 @@ variable "enable_net" {
 
 variable "enable_s3" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "enable_iam" {
